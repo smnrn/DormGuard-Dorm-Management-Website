@@ -1,6 +1,6 @@
+
 # 🏠 DormGuard - Visitor Management System
 
-**Version 2.2** | Production Ready ✅
 
 A comprehensive dormitory security system with digital visitor registration, role-based authentication, real-time tracking, email notifications, and Google Drive integration.
 
@@ -356,15 +356,10 @@ curl http://localhost:5000/api/health
 
 ---
 
-## 📝 License
 
-[Your License Here]
+## Author
 
----
-
-## 👥 Contributors
-
-[Your Team Here]
+Simon Roaring
 
 ---
 
@@ -381,7 +376,7 @@ curl http://localhost:5000/api/health
 
 - **Documentation:** See [SETUP_GUIDE.md](./SETUP_GUIDE.md)
 - **Issues:** [GitHub Issues](#)
-- **Email:** [your-support-email]
+- **Email:** simonronjoshua@gmail.com
 
 ---
 
