@@ -356,15 +356,10 @@ curl http://localhost:5000/api/health
 
 ---
 
-## 📝 License
 
-[Your License Here]
+## Author
 
----
-
-## 👥 Contributors
-
-[Your Team Here]
+Simon Roaring
 
 ---
 
