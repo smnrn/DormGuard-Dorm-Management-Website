@@ -1,0 +1,687 @@
+{
+  "info": {
+    "name": "DormGuard API",
+    "_postman_id": "dormguard-api-v1",
+    "description": "Complete API collection for DormGuard Visitor Management System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{authToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000/api",
+      "type": "string"
+    },
+    {
+      "key": "authToken",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.environment.set(\"authToken\", jsonData.token);",
+                  "    pm.collectionVariables.set(\"authToken\", jsonData.token);",
+                  "    console.log(\"Token saved:\", jsonData.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            },
+            "description": "Login with username and password to receive JWT token"
+          },
+          "response": []
+        },
+        {
+          "name": "Login as Tenant",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.environment.set(\"authToken\", jsonData.token);",
+                  "    pm.collectionVariables.set(\"authToken\", jsonData.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"john.doe\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login as Help Desk",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.environment.set(\"authToken\", jsonData.token);",
+                  "    pm.collectionVariables.set(\"authToken\", jsonData.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"helpdesk\",\n  \"password\": \"helpdesk123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth/logout",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "logout"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register Admin (Admin Only)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"newadmin\",\n  \"password\": \"SecurePass123!\",\n  \"full_name\": \"New Admin User\",\n  \"email\": \"admin@dormguard.com\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/register-admin",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "register-admin"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Tenants",
+      "item": [
+        {
+          "name": "Get All Tenants (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/tenants",
+              "host": ["{{baseUrl}}"],
+              "path": ["tenants"]
+            },
+            "description": "Get all tenants with room information (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Tenant by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/tenants/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["tenants", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Tenant (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"jane.smith\",\n  \"password\": \"TempPass123!\",\n  \"full_name\": \"Jane Smith\",\n  \"email\": \"jane.smith@university.edu\",\n  \"contact_number\": \"+1234567891\",\n  \"date_of_birth\": \"2001-03-20\",\n  \"gender\": \"Female\",\n  \"nationality\": \"American\",\n  \"address\": \"456 Oak Ave, City\",\n  \"emergency_contact_name\": \"Mary Smith\",\n  \"emergency_contact_relationship\": \"Mother\",\n  \"emergency_contact_number\": \"+1234567892\",\n  \"room_id\": 2,\n  \"move_in_date\": \"2024-09-01\",\n  \"lease_start_date\": \"2024-09-01\",\n  \"lease_end_date\": \"2025-05-31\",\n  \"student_id\": \"STU2024001\",\n  \"year_level\": \"2\",\n  \"course\": \"Computer Science\",\n  \"department\": \"Engineering\",\n  \"status\": \"Active\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/tenants",
+              "host": ["{{baseUrl}}"],
+              "path": ["tenants"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Tenant (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"full_name\": \"Jane Smith Updated\",\n  \"contact_number\": \"+1234567899\",\n  \"room_id\": 3,\n  \"status\": \"Active\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/tenants/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["tenants", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Tenant (Admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/tenants/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["tenants", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Change Password",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"currentPassword\": \"OldPass123!\",\n  \"newPassword\": \"NewPass456!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/tenants/1/change-password",
+              "host": ["{{baseUrl}}"],
+              "path": ["tenants", "1", "change-password"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Profile Image",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"profile_image\": \"https://drive.google.com/file/d/...\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/tenants/1/profile-image",
+              "host": ["{{baseUrl}}"],
+              "path": ["tenants", "1", "profile-image"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Current Tenant Profile",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/tenant/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["tenant", "profile"]
+            },
+            "description": "Get logged-in tenant's profile"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Visitors",
+      "item": [
+        {
+          "name": "Get All Visitors (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/visitors",
+              "host": ["{{baseUrl}}"],
+              "path": ["visitors"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Visitor by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/visitors/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["visitors", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Visitors by Tenant",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/visitors/tenant/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["visitors", "tenant", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register Visitor (Tenant)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"full_name\": \"Bob Wilson\",\n  \"contact_number\": \"+1555123456\",\n  \"purpose\": \"Birthday celebration\",\n  \"expected_date\": \"2024-12-15\",\n  \"expected_time\": \"18:00\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/tenant/register-visitor",
+              "host": ["{{baseUrl}}"],
+              "path": ["tenant", "register-visitor"]
+            },
+            "description": "Register visitor (must be 12+ hours in advance)"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Visitor Status (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"approval_status\": \"Approved\",\n  \"admin_remarks\": \"Approved for family visit\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/visitors/1/status",
+              "host": ["{{baseUrl}}"],
+              "path": ["visitors", "1", "status"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Approve Visitor (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/admin/approve-visitor/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "approve-visitor", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reject Visitor (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rejection_reason\": \"Security concerns\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/reject-visitor/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "reject-visitor", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Visitor (Admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/visitors/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["visitors", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Current Tenant Visitors",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/tenant/visitors",
+              "host": ["{{baseUrl}}"],
+              "path": ["tenant", "visitors"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Visitor (Tenant - Pending)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"visitor_name\": \"Alice Johnson Updated\",\n  \"purpose\": \"Updated purpose\",\n  \"visit_date\": \"2024-12-11\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/tenant/visitors/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["tenant", "visitors", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Visitor (Tenant - Pending)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/tenant/visitors/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["tenant", "visitors", "1"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Get Dashboard Stats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/admin/dashboard-stats",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "dashboard-stats"]
+            },
+            "description": "Get overview statistics for admin dashboard"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Rooms",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/admin/rooms",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "rooms"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Tenant",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"new.tenant\",\n  \"password\": \"TempPass123!\",\n  \"full_name\": \"New Tenant\",\n  \"email\": \"tenant@university.edu\",\n  \"contact_number\": \"+1234567890\",\n  \"date_of_birth\": \"2000-01-01\",\n  \"gender\": \"Male\",\n  \"nationality\": \"American\",\n  \"address\": \"123 Street\",\n  \"emergency_contact_name\": \"Emergency Contact\",\n  \"emergency_contact_relationship\": \"Parent\",\n  \"emergency_contact_number\": \"+1234567891\",\n  \"room_id\": 1,\n  \"move_in_date\": \"2024-09-01\",\n  \"student_id\": \"STU2024999\",\n  \"year_level\": \"1\",\n  \"course\": \"Engineering\",\n  \"department\": \"CEAS\",\n  \"status\": \"Active\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/create-tenant",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "create-tenant"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Visitor Logs",
+      "item": [
+        {
+          "name": "Get All Visitor Logs (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/visitor-logs",
+              "host": ["{{baseUrl}}"],
+              "path": ["visitor-logs"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Active Visitors (Help Desk)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/visitor-logs/active",
+              "host": ["{{baseUrl}}"],
+              "path": ["visitor-logs", "active"]
+            },
+            "description": "Get currently checked-in visitors"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Visitor Log by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/visitor-logs/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["visitor-logs", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Check In Visitor (Help Desk)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"visitor_id\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/visitor-logs/check-in",
+              "host": ["{{baseUrl}}"],
+              "path": ["visitor-logs", "check-in"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Check Out Visitor (Help Desk)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"visitor_id\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/visitor-logs/check-out",
+              "host": ["{{baseUrl}}"],
+              "path": ["visitor-logs", "check-out"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Health Check",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["health"]
+        },
+        "description": "Check if API is running"
+      },
+      "response": []
+    }
+  ]
+}
